@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shrikant — Developer & EdTech Creator</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#04040a;--c1:#6d28d9;--c2:#0ea5e9;--c3:#f59e0b;--c4:#ec4899;--c5:#10b981;--text:#f1f5f9;--muted:#475569;--border:rgba(255,255,255,0.06);--card:rgba(255,255,255,0.025);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+#cur{position:fixed;width:10px;height:10px;background:var(--c2);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .25s,height .25s,background .25s;}
+#cur-r{position:fixed;width:36px;height:36px;border:1.5px solid rgba(14,165,233,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s;}
+.mesh{position:fixed;inset:0;z-index:0;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:.1;animation:bmove 20s ease-in-out infinite alternate;}
+.b1{width:800px;height:800px;background:var(--c1);top:-300px;left:-300px;animation-duration:22s;}
+.b2{width:600px;height:600px;background:var(--c2);top:35%;right:-200px;animation-duration:17s;animation-delay:-7s;}
+.b3{width:500px;height:500px;background:var(--c4);bottom:-150px;left:25%;animation-duration:25s;animation-delay:-12s;}
+.b4{width:350px;height:350px;background:var(--c3);top:20%;left:50%;animation-duration:19s;animation-delay:-5s;}
+@keyframes bmove{0%{transform:translate(0,0) scale(1);}50%{transform:translate(40px,-50px) scale(1.08);}100%{transform:translate(-30px,40px) scale(.94);}}
+.grid-bg{position:fixed;inset:0;z-index:1;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:72px 72px;}
+nav,main,footer,.modal-ov{position:relative;z-index:10;}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1rem 3rem;background:rgba(4,4,10,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.12em;background:linear-gradient(135deg,var(--c1),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--c1),var(--c2));transform:scaleX(0);transition:transform .25s;}
+.nav-links a:hover{color:var(--text);}
+.nav-links a:hover::after{transform:scaleX(1);}
+.nav-badge{display:flex;align-items:center;gap:.5rem;font-size:.68rem;color:#22c55e;font-family:'JetBrains Mono',monospace;padding:.3rem .8rem;border:1px solid rgba(34,197,94,.25);border-radius:100px;background:rgba(34,197,94,.06);}
+.nav-dot{width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.6);}}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:8rem 3rem 4rem;position:relative;overflow:hidden;}
+.hero-content{max-width:780px;}
+.eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--c2);margin-bottom:1.6rem;padding:.35rem .9rem;border-radius:100px;border:1px solid rgba(14,165,233,.3);background:rgba(14,165,233,.05);opacity:0;animation:up .9s .15s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(5.5rem,14vw,12rem);line-height:.88;margin-bottom:.3rem;opacity:0;animation:up .9s .3s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-name .g{background:linear-gradient(135deg,#fff 0%,var(--c2) 45%,var(--c1) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4.5vw,4rem);letter-spacing:.06em;color:var(--muted);margin-bottom:1.6rem;opacity:0;animation:up .9s .45s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-sub em{color:var(--c3);font-style:normal;}
+.hero-desc{font-size:.98rem;color:var(--muted);line-height:1.85;max-width:530px;margin-bottom:2.5rem;opacity:0;animation:up .9s .6s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:up .9s .75s cubic-bezier(.16,1,.3,1) forwards;}
+@keyframes up{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:600;text-decoration:none;border-radius:8px;transition:all .3s cubic-bezier(.16,1,.3,1);cursor:none;border:none;}
+.btn-glow{background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;box-shadow:0 0 28px rgba(109,40,217,.45);}
+.btn-glow:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 45px rgba(109,40,217,.65);}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);transform:translateY(-3px);}
+.hero-floats{position:absolute;right:3rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1.4rem;opacity:0;animation:up .9s .9s cubic-bezier(.16,1,.3,1) forwards;}
+.float-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.7rem;text-align:center;backdrop-filter:blur(12px);transition:transform .3s;}
+.float-card:hover{transform:translateX(-8px);}
+.f-num{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;line-height:1;background:linear-gradient(135deg,var(--c2),var(--c1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.f-lbl{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-top:.2rem;}
+.scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;font-size:.62rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;animation:cue 2s ease-in-out infinite;}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,transparent,var(--c2));}
+@keyframes cue{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(9px);}}
+/* SECTIONS */
+section{padding:6rem 3rem;position:relative;}
+.sh{display:flex;align-items:baseline;gap:1.5rem;margin-bottom:3.5rem;}
+.sh-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--c1);opacity:.55;}
+.sh-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.2rem);letter-spacing:.03em;line-height:1;}
+.sh-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+/* PROJECTS */
+#projects{background:linear-gradient(to bottom,transparent,rgba(109,40,217,.025),transparent);}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+.pc{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:1.8rem;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;}
+.pc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(109,40,217,.09),rgba(14,165,233,.05));opacity:0;transition:opacity .35s;border-radius:inherit;}
+.pc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--pg);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.16,1,.3,1);}
+.pc:hover{transform:translateY(-10px);border-color:rgba(109,40,217,.35);box-shadow:0 28px 65px rgba(0,0,0,.55);}
+.pc:hover::before{opacity:1;}
+.pc:hover::after{transform:scaleX(1);}
+.pc:nth-child(1){--pg:linear-gradient(90deg,var(--c1),var(--c2));}
+.pc:nth-child(2){--pg:linear-gradient(90deg,var(--c2),var(--c5));}
+.pc:nth-child(3){--pg:linear-gradient(90deg,var(--c5),var(--c3));}
+.pc:nth-child(4){--pg:linear-gradient(90deg,var(--c3),var(--c4));}
+.pc:nth-child(5){--pg:linear-gradient(90deg,var(--c4),var(--c1));}
+.pc:nth-child(6){--pg:linear-gradient(90deg,var(--c1),var(--c5));}
+.p-ico{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem;background:rgba(255,255,255,.06);border:1px solid var(--border);}
+.p-title{font-size:.98rem;font-weight:600;margin-bottom:.5rem;line-height:1.4;}
+.p-desc{font-size:.78rem;color:var(--muted);line-height:1.75;margin-bottom:1.2rem;}
+.p-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.4rem;}
+.tag{font-size:.6rem;font-family:'JetBrains Mono',monospace;padding:.2rem .55rem;border-radius:4px;background:rgba(255,255,255,.055);color:var(--muted);border:1px solid var(--border);}
+.p-btn{display:inline-flex;align-items:center;gap:.4rem;font-size:.73rem;color:var(--c2);font-weight:600;cursor:none;background:none;border:none;padding:0;transition:gap .2s,color .2s;}
+.p-btn:hover{gap:.7rem;color:#fff;}
+/* MODAL */
+.modal-ov{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(4,4,10,.92);backdrop-filter:blur(20px);opacity:0;pointer-events:none;transition:opacity .35s;}
+.modal-ov.open{opacity:1;pointer-events:all;}
+.modal{background:#0c0c14;border:1px solid rgba(255,255,255,.1);border-radius:24px;width:min(900px,92vw);max-height:88vh;overflow:hidden;display:flex;flex-direction:column;transform:scale(.92) translateY(20px);transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.modal-ov.open .modal{transform:scale(1) translateY(0);}
+.m-hdr{display:flex;align-items:center;justify-content:space-between;padding:1.4rem 1.8rem;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);}
+.m-tw{display:flex;align-items:center;gap:.8rem;}
+.m-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;background:rgba(255,255,255,.07);border:1px solid var(--border);}
+.m-ttl{font-size:1rem;font-weight:600;}
+.m-sub{font-size:.72rem;color:var(--muted);margin-top:.1rem;font-family:'JetBrains Mono',monospace;}
+.m-x{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--muted);font-size:1rem;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.m-x:hover{background:rgba(255,255,255,.1);color:var(--text);}
+.m-body{flex:1;overflow-y:auto;padding:2rem 1.8rem;}
+.m-body::-webkit-scrollbar{width:4px;}
+.m-body::-webkit-scrollbar-thumb{background:rgba(109,40,217,.4);border-radius:4px;}
+.m-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem;}
+.mt{font-size:.65rem;font-family:'JetBrains Mono',monospace;padding:.25rem .65rem;border-radius:5px;border:1px solid;}
+.mt.t1{color:var(--c1);border-color:rgba(109,40,217,.3);background:rgba(109,40,217,.06);}
+.mt.t2{color:var(--c2);border-color:rgba(14,165,233,.3);background:rgba(14,165,233,.06);}
+.mt.t3{color:var(--c3);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.06);}
+.mt.t4{color:var(--c5);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.06);}
+.m-desc{font-size:.88rem;color:var(--muted);line-height:1.85;margin-bottom:2rem;}
+.m-prev{background:#070710;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.prev-bar{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);}
+.pd{width:10px;height:10px;border-radius:50%;}
+.pd:nth-child(1){background:#ff5f57;}.pd:nth-child(2){background:#febc2e;}.pd:nth-child(3){background:#28c840;}
+.prev-url{flex:1;background:rgba(255,255,255,.05);border-radius:5px;padding:.25rem .7rem;font-size:.65rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin:0 .5rem;}
+.prev-body{padding:1.5rem;}
+.m-ftr{padding:1.2rem 1.8rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.015);}
+.m-note{font-size:.7rem;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+.m-note span{color:var(--c2);}
+/* DEMO STYLES */
+.q-hdr{display:flex;justify-content:space-between;margin-bottom:1rem;}
+.q-num{font-size:.7rem;color:var(--c2);font-family:'JetBrains Mono',monospace;}
+.q-timer{font-size:.7rem;color:var(--c3);font-family:'JetBrains Mono',monospace;padding:.2rem .6rem;border:1px solid rgba(245,158,11,.3);border-radius:4px;}
+.q-txt{font-size:.9rem;font-weight:500;line-height:1.6;margin-bottom:1.2rem;padding:1rem;background:rgba(255,255,255,.03);border-radius:10px;border-left:3px solid var(--c1);}
+.q-opts{display:flex;flex-direction:column;gap:.6rem;}
+.opt{padding:.7rem 1rem;border-radius:8px;font-size:.82rem;border:1px solid var(--border);background:rgba(255,255,255,.03);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.7rem;}
+.opt:hover{border-color:rgba(14,165,233,.4);background:rgba(14,165,233,.06);}
+.opt.correct{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.08);color:var(--c5);}
+.opt.wrong{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.06);color:#ef4444;}
+.opt-k{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+.score-row{display:flex;gap:1rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);}
+.sc{text-align:center;flex:1;}
+.sc-v{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;line-height:1;}
+.sc-l{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+.net-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.net-status{display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--c5);font-family:'JetBrains Mono',monospace;}
+.net-dot{width:7px;height:7px;background:var(--c5);border-radius:50%;animation:pulse 1.5s ease-in-out infinite;}
+.pkt-tbl{width:100%;border-collapse:collapse;font-size:.72rem;font-family:'JetBrains Mono',monospace;}
+.pkt-tbl th{padding:.4rem .6rem;text-align:left;color:var(--muted);border-bottom:1px solid var(--border);font-weight:400;font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;}
+.pkt-tbl td{padding:.45rem .6rem;border-bottom:1px solid rgba(255,255,255,.03);}
+.pkt-tbl tr:hover td{background:rgba(255,255,255,.03);}
+.pt{padding:.1rem .4rem;border-radius:3px;font-size:.6rem;}
+.pt.http{background:rgba(14,165,233,.15);color:var(--c2);}.pt.tcp{background:rgba(16,185,129,.15);color:var(--c5);}.pt.dns{background:rgba(245,158,11,.15);color:var(--c3);}.pt.udp{background:rgba(236,72,153,.15);color:var(--c4);}
+.n-nav{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;}
+.n-tab{padding:.35rem .8rem;border-radius:6px;font-size:.7rem;border:1px solid var(--border);background:rgba(255,255,255,.03);cursor:pointer;transition:all .2s;font-family:'JetBrains Mono',monospace;}
+.n-tab.active{border-color:rgba(109,40,217,.4);background:rgba(109,40,217,.1);color:var(--c1);}
+.n-content{background:rgba(255,255,255,.02);border-radius:10px;padding:1rem;}
+.n-h{font-size:.82rem;font-weight:600;color:var(--c2);margin-bottom:.6rem;}
+.n-p{font-size:.77rem;color:var(--muted);line-height:1.75;margin-bottom:.5rem;}
+.n-fact{background:rgba(245,158,11,.07);border-left:3px solid var(--c3);border-radius:0 6px 6px 0;padding:.5rem .8rem;font-size:.74rem;color:var(--c3);margin-top:.5rem;}
+.atm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;margin-bottom:1rem;}
+.atm-card{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:.9rem;}
+.atm-ct{font-size:.68rem;color:var(--c3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;font-family:'JetBrains Mono',monospace;}
+.atm-cv{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;background:linear-gradient(135deg,var(--c2),var(--c1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.atm-cs{font-size:.65rem;color:var(--muted);margin-top:.2rem;}
+.atm-q{background:rgba(109,40,217,.06);border:1px solid rgba(109,40,217,.2);border-radius:10px;padding:1rem;}
+.atm-q p{font-size:.84rem;font-weight:500;margin-bottom:.8rem;}
+.atm-opts{display:flex;flex-direction:column;gap:.4rem;}
+.atm-opt{padding:.5rem .8rem;border-radius:7px;font-size:.78rem;border:1px solid var(--border);background:rgba(255,255,255,.03);cursor:pointer;transition:all .2s;}
+.atm-opt:hover{border-color:rgba(14,165,233,.3);background:rgba(14,165,233,.05);}
+.atm-opt.sel{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.07);color:var(--c5);}
+.geo-opts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.8rem;}
+.geo-opt{padding:.5rem .8rem;border-radius:7px;font-size:.75rem;border:1px solid var(--border);background:rgba(255,255,255,.03);cursor:pointer;text-align:center;transition:all .2s;}
+.geo-opt:hover{border-color:rgba(14,165,233,.4);background:rgba(14,165,233,.06);}
+.geo-opt.sel{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.08);color:var(--c5);}
+.prog-row{display:flex;align-items:center;gap:.8rem;margin-top:1rem;}
+.prog-bar{flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--c1),var(--c2));border-radius:2px;transition:width 1s ease;}
+/* SKILLS */
+#skills{background:linear-gradient(to bottom,transparent,rgba(14,165,233,.02),transparent);}
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;}
+.sk-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.5rem;transition:all .3s;}
+.sk-card:hover{border-color:rgba(255,255,255,.11);transform:translateY(-5px);}
+.sk-emoji{font-size:1.9rem;margin-bottom:1rem;}
+.sk-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--c3);margin-bottom:1rem;}
+.sk-items{display:flex;flex-direction:column;gap:.5rem;}
+.sk-item{display:flex;align-items:center;gap:.5rem;font-size:.79rem;color:var(--muted);}
+.sk-dot{width:4px;height:4px;border-radius:50%;background:var(--c1);flex-shrink:0;}
+/* SERVICES */
+#services{background:linear-gradient(to bottom,transparent,rgba(245,158,11,.02),transparent);}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+.svc-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;}
+.svc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--sg);transform:scaleX(0);transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.svc-card:hover{transform:translateY(-8px);border-color:rgba(255,255,255,.1);box-shadow:0 22px 45px rgba(0,0,0,.38);}
+.svc-card:hover::after{transform:scaleX(1);}
+.svc-card:nth-child(1){--sg:linear-gradient(90deg,var(--c1),var(--c2));}
+.svc-card:nth-child(2){--sg:linear-gradient(90deg,var(--c2),var(--c5));}
+.svc-card:nth-child(3){--sg:linear-gradient(90deg,var(--c5),var(--c3));}
+.svc-card:nth-child(4){--sg:linear-gradient(90deg,var(--c3),var(--c4));}
+.svc-card:nth-child(5){--sg:linear-gradient(90deg,var(--c4),var(--c1));}
+.svc-emoji{font-size:2rem;margin-bottom:1rem;display:block;}
+.svc-title{font-size:.98rem;font-weight:600;margin-bottom:.5rem;}
+.svc-desc{font-size:.79rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem;}
+.svc-price{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em;background:linear-gradient(135deg,var(--c2),var(--c1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+/* CONTACT */
+#contact{background:linear-gradient(to bottom,transparent,rgba(236,72,153,.025));}
+.contact-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:start;}
+.cl-title{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:.03em;margin-bottom:1rem;line-height:1.1;}
+.cl-title span{background:linear-gradient(135deg,var(--c1),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.cl-desc{font-size:.88rem;color:var(--muted);line-height:1.85;margin-bottom:2rem;}
+.c-links{display:flex;flex-direction:column;gap:.7rem;}
+.c-link{display:flex;align-items:center;gap:.9rem;padding:.85rem 1.1rem;background:var(--card);border:1px solid var(--border);border-radius:11px;text-decoration:none;color:var(--text);font-size:.84rem;transition:all .3s;}
+.c-link:hover{border-color:rgba(109,40,217,.4);background:rgba(109,40,217,.07);transform:translateX(7px);}
+.c-ico{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.c-form-wrap{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:22px;padding:2.5rem;backdrop-filter:blur(12px);}
+.cf-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em;margin-bottom:1.5rem;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.f-field{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem;}
+.f-field label{font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
+.f-field input,.f-field textarea,.f-field select{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Outfit',sans-serif;font-size:.84rem;padding:.72rem 1rem;outline:none;transition:border-color .2s;resize:none;}
+.f-field input:focus,.f-field textarea:focus{border-color:var(--c1);background:rgba(109,40,217,.05);}
+.f-field select option{background:#0c0c1a;}
+footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;position:relative;z-index:10;}
+.f-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.12em;background:linear-gradient(135deg,var(--c1),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.f-txt{font-size:.7rem;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+.f-nav{display:flex;gap:1.5rem;}
+.f-nav a{font-size:.7rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+.f-nav a:hover{color:var(--c2);}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:rgba(109,40,217,.45);border-radius:4px;}
+@media(max-width:1100px){.projects-grid,.svc-grid{grid-template-columns:repeat(2,1fr);}.skills-grid{grid-template-columns:repeat(2,1fr);}.hero-floats{display:none;}}
+@media(max-width:768px){nav{padding:1rem 1.5rem;}.nav-links{display:none;}section{padding:4rem 1.5rem;}.projects-grid,.skills-grid,.svc-grid{grid-template-columns:1fr;}.contact-wrap{grid-template-columns:1fr;gap:2rem;}.f-row{grid-template-columns:1fr;}footer{flex-direction:column;align-items:flex-start;padding:2rem 1.5rem;}body{cursor:auto;}#cur,#cur-r{display:none;}}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-r"></div>
+<div class="mesh"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div></div>
+<div class="grid-bg"></div>
+
+<!-- MODAL -->
+<div class="modal-ov" id="modal">
+  <div class="modal">
+    <div class="m-hdr">
+      <div class="m-tw"><div class="m-ico" id="m-ico"></div><div><div class="m-ttl" id="m-ttl"></div><div class="m-sub" id="m-sub"></div></div></div>
+      <button class="m-x" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="m-body">
+      <div class="m-tags" id="m-tags"></div>
+      <p class="m-desc" id="m-desc"></p>
+      <div class="m-prev">
+        <div class="prev-bar"><div class="pd"></div><div class="pd"></div><div class="pd"></div><div class="prev-url" id="m-url"></div></div>
+        <div class="prev-body" id="m-prev"></div>
+      </div>
+    </div>
+    <div class="m-ftr">
+      <div class="m-note">Status: <span>Uploading to GitHub Pages soon</span></div>
+      <button class="btn btn-glow" style="font-size:.75rem;padding:.6rem 1.4rem;" onclick="closeModal()">Close Preview</button>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-logo">SHRIKANT</div>
+  <ul class="nav-links"><li><a href="#projects">Projects</a></li><li><a href="#skills">Skills</a></li><li><a href="#services">Services</a></li><li><a href="#contact">Contact</a></li></ul>
+  <div class="nav-badge"><div class="nav-dot"></div>Available for work</div>
+</nav>
+
+<main>
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">&#9889; React Developer &amp; EdTech Creator</div>
+    <h1 class="hero-name"><span class="g">SHRIKANT</span></h1>
+    <p class="hero-sub">Building tools that <em>matter.</em></p>
+    <p class="hero-desc">I craft interactive EdTech platforms, quiz engines, and AI-powered tools combining React, Python, and deep UPSC domain knowledge. From idea to deployment.</p>
+    <div class="hero-btns"><a href="#projects" class="btn btn-glow">View My Work &rarr;</a><a href="#contact" class="btn btn-ghost">Let's Collaborate</a></div>
+  </div>
+  <div class="hero-floats">
+    <div class="float-card"><div class="f-num">6+</div><div class="f-lbl">Projects Built</div></div>
+    <div class="float-card"><div class="f-num">500+</div><div class="f-lbl">MCQs Created</div></div>
+    <div class="float-card"><div class="f-num">3</div><div class="f-lbl">Tech Stacks</div></div>
+    <div class="float-card"><div class="f-num">24h</div><div class="f-lbl">Response Time</div></div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<section id="projects">
+  <div class="sh reveal"><span class="sh-num">01</span><h2 class="sh-title">Projects</h2><div class="sh-line"></div></div>
+  <div class="projects-grid">
+    <div class="pc reveal"><div class="p-ico">&#127963;</div><div class="p-title">Ancient History MCQ Generator</div><p class="p-desc">API-powered question paper generator with 50 sets x 20 questions, UPSC marking scheme, chapter filters, and detailed explanations.</p><div class="p-tags"><span class="tag">React</span><span class="tag">Anthropic API</span><span class="tag">EdTech</span></div><button class="p-btn" onclick="openModal('mcq')">View Live &rarr;</button></div>
+    <div class="pc reveal"><div class="p-ico">&#127757;</div><div class="p-title">Physical Geography Quiz App</div><p class="p-desc">45-question interactive quiz from NCERT content with chapter filtering, timer, UPSC marking scheme, and performance tracking.</p><div class="p-tags"><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span><span class="tag">Quiz Engine</span></div><button class="p-btn" onclick="openModal('geo')">View Live &rarr;</button></div>
+    <div class="pc reveal"><div class="p-ico">&#128300;</div><div class="p-title">Wireshark Network Simulator</div><p class="p-desc">React-based network analysis simulator with live capture simulation, dark mode, packet inspection, and export to CSV/JSON.</p><div class="p-tags"><span class="tag">React</span><span class="tag">Networking</span><span class="tag">Simulation</span></div><button class="p-btn" onclick="openModal('net')">View Live &rarr;</button></div>
+    <div class="pc reveal"><div class="p-ico">&#128220;</div><div class="p-title">Modern History Question Generator</div><p class="p-desc">AI-powered question paper generator with difficulty levels, topic selection, and Mains/Prelims format switching.</p><div class="p-tags"><span class="tag">React</span><span class="tag">API Integration</span><span class="tag">UPSC</span></div><button class="p-btn" onclick="openModal('hist')">View Live &rarr;</button></div>
+    <div class="pc reveal"><div class="p-ico">&#128221;</div><div class="p-title">UPSC Study Notes Series</div><p class="p-desc">Styled HTML notes on Rare Earth Elements, Carbon Cycle, and Tribes of India with 2025-26 current affairs coverage.</p><div class="p-tags"><span class="tag">HTML</span><span class="tag">Content</span><span class="tag">Current Affairs</span></div><button class="p-btn" onclick="openModal('notes')">View Live &rarr;</button></div>
+    <div class="pc reveal"><div class="p-ico">&#127754;</div><div class="p-title">Atmospheric Circulation MCQ Tool</div><p class="p-desc">Interactive MCQ app for Geography and Atmospheric Circulation with performance tracking, explanation panels, and timer.</p><div class="p-tags"><span class="tag">JavaScript</span><span class="tag">Geography</span><span class="tag">EdTech</span></div><button class="p-btn" onclick="openModal('atm')">View Live &rarr;</button></div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="sh reveal"><span class="sh-num">02</span><h2 class="sh-title">Skills</h2><div class="sh-line"></div></div>
+  <div class="skills-grid">
+    <div class="sk-card reveal"><div class="sk-emoji">&#9883;&#65039;</div><div class="sk-title">Frontend</div><div class="sk-items"><div class="sk-item"><div class="sk-dot"></div>React.js</div><div class="sk-item"><div class="sk-dot"></div>JavaScript ES6+</div><div class="sk-item"><div class="sk-dot"></div>HTML5 / CSS3</div><div class="sk-item"><div class="sk-dot"></div>Tailwind CSS</div><div class="sk-item"><div class="sk-dot"></div>Responsive Design</div></div></div>
+    <div class="sk-card reveal"><div class="sk-emoji">&#128013;</div><div class="sk-title">Backend &amp; Tools</div><div class="sk-items"><div class="sk-item"><div class="sk-dot"></div>Python</div><div class="sk-item"><div class="sk-dot"></div>Node.js</div><div class="sk-item"><div class="sk-dot"></div>REST APIs</div><div class="sk-item"><div class="sk-dot"></div>Git &amp; GitHub</div><div class="sk-item"><div class="sk-dot"></div>Netlify / GH Pages</div></div></div>
+    <div class="sk-card reveal"><div class="sk-emoji">&#127891;</div><div class="sk-title">Domain Knowledge</div><div class="sk-items"><div class="sk-item"><div class="sk-dot"></div>UPSC GS 1, 2, 3, 4</div><div class="sk-item"><div class="sk-dot"></div>Indian History &amp; Polity</div><div class="sk-item"><div class="sk-dot"></div>Geography &amp; Ecology</div><div class="sk-item"><div class="sk-dot"></div>Current Affairs 2025-26</div><div class="sk-item"><div class="sk-dot"></div>EdTech Content Design</div></div></div>
+    <div class="sk-card reveal"><div class="sk-emoji">&#128640;</div><div class="sk-title">Specializations</div><div class="sk-items"><div class="sk-item"><div class="sk-dot"></div>MCQ / Quiz Portals</div><div class="sk-item"><div class="sk-dot"></div>AI-Powered Apps</div><div class="sk-item"><div class="sk-dot"></div>Study Tool Development</div><div class="sk-item"><div class="sk-dot"></div>UPSC Content Writing</div><div class="sk-item"><div class="sk-dot"></div>Python Automation</div></div></div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="sh reveal"><span class="sh-num">03</span><h2 class="sh-title">Services</h2><div class="sh-line"></div></div>
+  <div class="svc-grid">
+    <div class="svc-card reveal"><span class="svc-emoji">&#9889;</span><div class="svc-title">MCQ / Quiz Portal Development</div><p class="svc-desc">Custom quiz apps with timer, auto-scoring, chapter filtering, and explanations. Perfect for coaching institutes.</p><div class="svc-price">From &#8377;5,000</div></div>
+    <div class="svc-card reveal"><span class="svc-emoji">&#127760;</span><div class="svc-title">React Web App Development</div><p class="svc-desc">Dashboards, SPAs, and interactive tools. Clean code, fast delivery, and deployment included.</p><div class="svc-price">From &#8377;8,000</div></div>
+    <div class="svc-card reveal"><span class="svc-emoji">&#9997;&#65039;</span><div class="svc-title">UPSC Content Writing</div><p class="svc-desc">GS notes, MCQ sets, current affairs articles, and Mains answer writing guides at UPSC-standard accuracy.</p><div class="svc-price">&#8377;2 / word</div></div>
+    <div class="svc-card reveal"><span class="svc-emoji">&#129302;</span><div class="svc-title">AI-Powered EdTech Tools</div><p class="svc-desc">Question generators, study assistants, and AI-integrated portals using the Anthropic API.</p><div class="svc-price">From &#8377;12,000</div></div>
+    <div class="svc-card reveal"><span class="svc-emoji">&#128295;</span><div class="svc-title">Python Automation Scripts</div><p class="svc-desc">Data processing, Excel automation, web scraping, and workflow automation for small businesses.</p><div class="svc-price">From &#8377;3,000</div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="sh reveal"><span class="sh-num">04</span><h2 class="sh-title">Contact</h2><div class="sh-line"></div></div>
+  <div class="contact-wrap">
+    <div class="reveal">
+      <div class="cl-title">Let's build<br/><span>something great.</span></div>
+      <p class="cl-desc">Open to freelance projects, EdTech tool development, and content collaborations. I respond within 24 hours.</p>
+      <div class="c-links">
+        <a href="mailto:your@email.com" class="c-link"><div class="c-ico">&#9993;&#65039;</div>your@email.com</a>
+        <a href="https://github.com/yourusername" class="c-link" target="_blank"><div class="c-ico">&#128025;</div>github.com/yourusername</a>
+        <a href="https://linkedin.com/in/yourusername" class="c-link" target="_blank"><div class="c-ico">&#128188;</div>linkedin.com/in/yourusername</a>
+        <a href="https://fiverr.com/yourusername" class="c-link" target="_blank"><div class="c-ico">&#127919;</div>fiverr.com/yourusername</a>
+      </div>
+    </div>
+    <div class="c-form-wrap reveal">
+      <div class="cf-title">Send a Message</div>
+      <div class="f-row">
+        <div class="f-field"><label>Name</label><input type="text" placeholder="Your name"/></div>
+        <div class="f-field"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+      </div>
+      <div class="f-field"><label>Service Needed</label><select><option value="">Select a service...</option><option>MCQ / Quiz Portal</option><option>React Web App</option><option>UPSC Content Writing</option><option>AI-Powered Tool</option><option>Python Automation</option></select></div>
+      <div class="f-field"><label>Project Brief</label><textarea rows="4" placeholder="Tell me about your project, timeline, and budget..."></textarea></div>
+      <button class="btn btn-glow" style="width:100%;justify-content:center;" onclick="alert('Message sent! I will reply within 24 hours.')">Send Message &#10022;</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="f-logo">SHRIKANT</div>
+  <div class="f-txt">&#169; 2026 Crafted with HTML &amp; CSS</div>
+  <div class="f-nav"><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#services">Services</a><a href="#contact">Contact</a></div>
+</footer>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.pc,.svc-card,.sk-card,.c-link,.float-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';cur.style.background='#ec4899';ring.style.width='55px';ring.style.height='55px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';cur.style.background='#0ea5e9';ring.style.width='36px';ring.style.height='36px';});
+});
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),+e.target.dataset.d||0);});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.dataset.d=(i%5)*85;obs.observe(el);});
+// Nav active
+const secs=document.querySelectorAll('section[id]'),nls=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)c=s.id;});nls.forEach(l=>{l.style.color=l.getAttribute('href')==='#'+c?'#f1f5f9':'';});});
+
+// Modal data
+const P={
+  mcq:{ico:'&#127963;',ttl:'Ancient History MCQ Generator',sub:'React + Anthropic API',url:'shrikant.github.io/ancient-history-mcq',
+    desc:'Generates UPSC-standard MCQs on Ancient History using the Anthropic API. 20 fresh questions per set across 50 sets, with chapter filtering, difficulty selection, and UPSC marking scheme with negative marking.',
+    tags:[{l:'React',c:'t1'},{l:'Anthropic API',c:'t2'},{l:'EdTech',c:'t3'},{l:'UPSC',c:'t4'}],
+    prev:`<div><div class="q-hdr"><span class="q-num">Question 3 of 20 — Ancient History</span><span class="q-timer">08:42 left</span></div><div class="q-txt">Which Vedic text primarily deals with melodies and chants used in Vedic rituals?</div><div class="q-opts"><div class="opt" onclick="this.className='opt wrong'"><span class="opt-k">A</span>Rigveda</div><div class="opt correct"><span class="opt-k">B</span>Samaveda &#10003;</div><div class="opt" onclick="this.className='opt wrong'"><span class="opt-k">C</span>Yajurveda</div><div class="opt" onclick="this.className='opt wrong'"><span class="opt-k">D</span>Atharvaveda</div></div><div class="score-row"><div class="sc"><div class="sc-v" style="color:#10b981">8</div><div class="sc-l">Correct</div></div><div class="sc"><div class="sc-v" style="color:#ef4444">2</div><div class="sc-l">Wrong</div></div><div class="sc"><div class="sc-v" style="color:#f59e0b">14.67</div><div class="sc-l">Score</div></div><div class="sc"><div class="sc-v" style="color:#6d28d9">40%</div><div class="sc-l">Done</div></div></div></div>`},
+  geo:{ico:'&#127757;',ttl:'Physical Geography Quiz App',sub:'JavaScript + HTML/CSS',url:'shrikant.github.io/geography-quiz',
+    desc:'Interactive quiz tool built from NCERT Physical Geography content. Features 45 questions across 9 chapters, timer, chapter-wise filtering, and UPSC negative marking. Tracks performance per session.',
+    tags:[{l:'JavaScript',c:'t1'},{l:'HTML/CSS',c:'t2'},{l:'Quiz Engine',c:'t3'},{l:'NCERT',c:'t4'}],
+    prev:`<div><div style="background:rgba(255,255,255,.02);border-radius:12px;padding:1.2rem;"><div style="font-size:.7rem;color:var(--c2);font-family:'JetBrains Mono',monospace;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.1em;">Chapter 4 — Atmosphere</div><div style="background:rgba(109,40,217,.07);border:1px solid rgba(109,40,217,.2);border-radius:10px;padding:1rem;"><p style="font-size:.85rem;font-weight:500;margin-bottom:.8rem;">The atmospheric layer containing the ozone layer is called:</p><div class="geo-opts"><div class="geo-opt" onclick="this.className='geo-opt'">Troposphere</div><div class="geo-opt sel">Stratosphere &#10003;</div><div class="geo-opt" onclick="this.className='geo-opt'">Mesosphere</div><div class="geo-opt" onclick="this.className='geo-opt'">Thermosphere</div></div></div><div class="prog-row"><span style="font-size:.7rem;color:var(--muted)">Progress</span><div class="prog-bar"><div class="prog-fill" style="width:36%"></div></div><span style="font-size:.7rem;color:var(--c2);font-family:'JetBrains Mono',monospace">16/45</span></div></div></div>`},
+  net:{ico:'&#128300;',ttl:'Wireshark Network Simulator',sub:'React App',url:'shrikant.github.io/network-simulator',
+    desc:'Browser-based network analysis simulator inspired by Wireshark. Simulates real-time packet capture with protocol breakdown, filtering, and export to CSV/JSON/text. Features dark mode and detailed packet inspection.',
+    tags:[{l:'React',c:'t1'},{l:'Networking',c:'t2'},{l:'Simulation',c:'t3'},{l:'Dark Mode',c:'t4'}],
+    prev:`<div><div class="net-hdr"><div class="net-status"><div class="net-dot"></div>Capturing — eth0 — 3,847 packets</div><span style="font-size:.68rem;color:var(--muted);font-family:'JetBrains Mono',monospace;padding:.2rem .5rem;border:1px solid var(--border);border-radius:4px;">Filter: tcp</span></div><table class="pkt-tbl"><thead><tr><th>No.</th><th>Time</th><th>Source</th><th>Destination</th><th>Protocol</th><th>Len</th></tr></thead><tbody><tr><td>1</td><td>0.000000</td><td>192.168.1.5</td><td>8.8.8.8</td><td><span class="pt dns">DNS</span></td><td>74</td></tr><tr><td>2</td><td>0.012341</td><td>8.8.8.8</td><td>192.168.1.5</td><td><span class="pt dns">DNS</span></td><td>90</td></tr><tr><td>3</td><td>0.013200</td><td>192.168.1.5</td><td>142.250.80.46</td><td><span class="pt tcp">TCP</span></td><td>60</td></tr><tr><td>4</td><td>0.045678</td><td>192.168.1.5</td><td>142.250.80.46</td><td><span class="pt http">HTTP</span></td><td>512</td></tr><tr><td>5</td><td>0.098231</td><td>192.168.1.5</td><td>10.0.0.1</td><td><span class="pt udp">UDP</span></td><td>44</td></tr></tbody></table></div>`},
+  hist:{ico:'&#128220;',ttl:'Modern History Question Generator',sub:'React + Anthropic API',url:'shrikant.github.io/modern-history-gen',
+    desc:'AI-powered question paper generator for Modern History. Generates 20 unique questions per set across 50 sets. Supports Prelims (MCQ) and Mains formats, topic-wise selection, and three difficulty levels.',
+    tags:[{l:'React',c:'t1'},{l:'Anthropic API',c:'t2'},{l:'Modern History',c:'t3'},{l:'UPSC',c:'t4'}],
+    prev:`<div><div class="q-hdr"><span class="q-num">Set 12/50 — Modern History — Hard</span><span class="q-timer" style="color:var(--c4)">Prelims Mode</span></div><div class="q-txt">With reference to the Indian National Army (INA), which statements are correct?<br><br>1. Founded by Subhas Chandra Bose in 1942<br>2. INA trials held at the Red Fort, Delhi<br>3. Nehru defended the INA officers in court</div><div class="q-opts"><div class="opt" onclick="this.className='opt wrong'"><span class="opt-k">A</span>1 and 2 only</div><div class="opt" onclick="this.className='opt wrong'"><span class="opt-k">B</span>2 only</div><div class="opt correct"><span class="opt-k">C</span>2 and 3 only &#10003;</div><div class="opt" onclick="this.className='opt wrong'"><span class="opt-k">D</span>1, 2 and 3</div></div></div>`},
+  notes:{ico:'&#128221;',ttl:'UPSC Study Notes Series',sub:'HTML / CSS Study Material',url:'shrikant.github.io/upsc-notes',
+    desc:'Styled HTML study notes covering high-priority UPSC topics: Rare Earth Elements, Carbon Cycle, and Tribes of India, with current affairs through 2025-26.',
+    tags:[{l:'HTML',c:'t1'},{l:'CSS',c:'t2'},{l:'Current Affairs',c:'t3'},{l:'GS Topics',c:'t4'}],
+    prev:`<div><div class="n-nav"><div class="n-tab active">Rare Earth Elements</div><div class="n-tab" onclick="this.closest('.n-nav').querySelectorAll('.n-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active')">Carbon</div><div class="n-tab" onclick="this.closest('.n-nav').querySelectorAll('.n-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active')">Tribes</div></div><div class="n-content"><div class="n-h">Rare Earth Elements Quick Revision</div><p class="n-p">REEs are 17 metallic elements: 15 lanthanides + Scandium + Yttrium. Used in EVs, wind turbines, guided missiles, smartphones, and MRI machines.</p><p class="n-p"><strong style="color:var(--text)">India's deposits:</strong> Monazite sands in Kerala, Tamil Nadu, Odisha — among world's largest reserves.</p><div class="n-fact">China controls ~60% of global REE production and ~85% of processing — a critical supply chain vulnerability for India and the West.</div></div></div>`},
+  atm:{ico:'&#127754;',ttl:'Atmospheric Circulation MCQ Tool',sub:'JavaScript + HTML/CSS',url:'shrikant.github.io/atmos-mcq',
+    desc:'Interactive MCQ practice for Atmospheric Circulation topics. Covers jet streams, pressure belts, monsoon systems, and ocean currents. Features a live performance dashboard and instant explanations.',
+    tags:[{l:'JavaScript',c:'t1'},{l:'Geography',c:'t2'},{l:'Atmospheric Science',c:'t3'},{l:'EdTech',c:'t4'}],
+    prev:`<div><div class="atm-grid"><div class="atm-card"><div class="atm-ct">Questions</div><div class="atm-cv">28</div><div class="atm-cs">of 45 total</div></div><div class="atm-card"><div class="atm-ct">Accuracy</div><div class="atm-cv">71%</div><div class="atm-cs">20 correct</div></div><div class="atm-card"><div class="atm-ct">Score</div><div class="atm-cv">37.33</div><div class="atm-cs">UPSC scheme</div></div><div class="atm-card"><div class="atm-ct">Topic</div><div class="atm-cv" style="font-size:1rem;padding-top:.3rem">Jet Streams</div><div class="atm-cs">Chapter 5</div></div></div><div class="atm-q"><p>The sub-tropical jet stream primarily flows at what altitude?</p><div class="atm-opts"><div class="atm-opt" onclick="this.className='atm-opt'">5-8 km altitude</div><div class="atm-opt sel">9-12 km altitude &#10003;</div><div class="atm-opt" onclick="this.className='atm-opt'">15-18 km altitude</div><div class="atm-opt" onclick="this.className='atm-opt'">Above 20 km altitude</div></div></div></div>`}
+};
+
+function openModal(id){
+  const p=P[id];
+  document.getElementById('m-ico').innerHTML=p.ico;
+  document.getElementById('m-ttl').textContent=p.ttl;
+  document.getElementById('m-sub').textContent=p.sub;
+  document.getElementById('m-url').textContent=p.url;
+  document.getElementById('m-desc').textContent=p.desc;
+  document.getElementById('m-tags').innerHTML=p.tags.map(t=>`<span class="mt ${t.c}">${t.l}</span>`).join('');
+  document.getElementById('m-prev').innerHTML=p.prev;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+</body>
+</html>
